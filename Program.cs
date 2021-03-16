@@ -9,8 +9,6 @@ namespace kl5
     class Program
     {
 
-        
-
         static void Main(string[] args)
         {
 
@@ -76,27 +74,6 @@ namespace kl5
             openWarehouse.addPrice(goods3, goods3.SKU, goods3.Price);
             
             double db = openWarehouse.calculationGoods(openWarehouse.priceDict);
-
-
-           
-
-            //Console.WriteLine($"{db}");
-
-           
-
-      
-
-            //foreach (KeyValuePair<int, int> keyValue in covered.goodsDict)
-            //{
-
-            //    Console.WriteLine($" Товар {keyValue.Key} в количестве {keyValue.Value}");
-            //}
-
-            //foreach (KeyValuePair<int, double> keyValue in covered.priceDict)
-            //{
-            //    Console.WriteLine($" Товар {keyValue.Key} по цене {keyValue.Value}");
-            //}
-
 
 
 
