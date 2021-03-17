@@ -9,6 +9,8 @@ namespace kl5
     class Program
     {
 
+        
+
         static void Main(string[] args)
         {
 
@@ -61,20 +63,47 @@ namespace kl5
             openWarehouse.Emp = emp;
             openWarehouse.Address = address;
 
-            
-            openWarehouse.addGoods(goods, goods.SKU, 15);
-            openWarehouse.addGoods(goods1, goods1.SKU, 18);
-            openWarehouse.addGoods(goods2, goods2.SKU, 30);
-            openWarehouse.addGoods(goods3, goods3.SKU, 39);
-            
-           
-            openWarehouse.addPrice(goods, goods.SKU, goods.Price);
-            openWarehouse.addPrice(goods1, goods1.SKU, goods1.Price); 
-            openWarehouse.addPrice(goods2, goods2.SKU, goods2.Price);
-            openWarehouse.addPrice(goods3, goods3.SKU, goods3.Price);
-            
+            try
+            {   
+                openWarehouse.addGoods(goods3, goods3.SKU, 39);
+                openWarehouse.addGoods(goods2, goods2.SKU, 30);
+                openWarehouse.addGoods(goods1, goods1.SKU, 18);
+                openWarehouse.addGoods(goods, goods.SKU, 15);
+                Console.WriteLine("Товар успешно добавлен на склад");
+            }
+            catch(MyException mex)
+            {
+                Console.WriteLine(mex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Конец загрузки товара");
+            }
+
+
+            try
+            {
+                openWarehouse.addPrice(goods1, goods1.SKU, goods1.Price); 
+                openWarehouse.addPrice(goods2, goods2.SKU, goods2.Price);
+                openWarehouse.addPrice(goods3, goods3.SKU, goods3.Price);
+                openWarehouse.addPrice(goods, goods.SKU, goods.Price);
+                
+            }
+            catch(MyException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Конец добавления цен на товар.");
+            }
+
             double db = openWarehouse.calculationGoods(openWarehouse.priceDict);
 
+
+           
+
+            
 
 
             Console.ReadKey();

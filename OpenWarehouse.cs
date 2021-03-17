@@ -27,31 +27,21 @@ namespace kl5
 
         public void addPrice(Goods g, int t, double price)
         {
-            //priceDict.Add(t, price);
+            
             typesGoods tg = typesGoods.bulk;
             int s = (int)tg;
-            if (g.Type == s)
-            {
-                s=0;
-            }
-            else
-            {
-                priceDict.Add(t, price);
-            }
+            if (g.Type == s) throw new MyException();
+            priceDict.Add(t, price);
+            
         }
 
         public void addGoods(Goods g, int t, int amount)
         {
             typesGoods goodsType = typesGoods.bulk;
             int s = (int)goodsType;
-            if (g.Type == s)
-            {
-                s = 0; 
-            }
-            else
-            {
-                goodsDict.Add(t, amount);
-            }
+            if (g.Type == s) throw new MyException();          
+            goodsDict.Add(t, amount);
+           
         }
 
         public double calculationGoods(Dictionary<int, double> dict)
