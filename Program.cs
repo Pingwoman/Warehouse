@@ -8,9 +8,7 @@ namespace kl5
 {
     class Program
     {
-
-        
-
+ 
         static void Main(string[] args)
         {
 
@@ -43,22 +41,7 @@ namespace kl5
             goods2.Ttype = Enum.GetName(typeof(typesGoods), goods2.Type);
             goods3.Ttype = Enum.GetName(typeof(typesGoods), goods3.Type);
 
-            /** CoveredWarehouse covered = new CoveredWarehouse();
-             covered.setEmployee(emp);
-             covered.Address = address;
-
-             covered.addGoods(goods.SKU, 15);
-             covered.addGoods(goods1.SKU, 18);
-             covered.addGoods(goods2.SKU, 30);
-             covered.addGoods(goods3.SKU, 39);
-             covered.addPrice(goods.SKU, goods.Price);
-             covered.addPrice(goods1.SKU, goods1.Price);
-             covered.addPrice(goods2.SKU, goods2.Price);
-             covered.addPrice(goods3.SKU, goods3.Price);
-
-             double db =  covered.calculationGoods(covered.priceDict);
-            **/
-
+            
             OpenWarehouse openWarehouse = new OpenWarehouse();
             openWarehouse.Emp = emp;
             openWarehouse.Address = address;
@@ -99,12 +82,6 @@ namespace kl5
             }
 
             double db = openWarehouse.calculationGoods(openWarehouse.priceDict);
-
-
-           
-
-            
-
 
             Console.ReadKey();
         }
