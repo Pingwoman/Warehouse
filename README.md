@@ -1,3 +1,3 @@
 # KL5-6 Warehouse
-# new custom Exception class MyException
-# two try-catch blocks have been added
+<p> new custom Exception class MyException <p>
+ two try-catch blocks have been added
