@@ -8,6 +8,13 @@ namespace kl5
 {
     class OpenWarehouse : IWarehouse
     {
+        //public delegate void WarehouseAdded(string message, Goods g); 
+        public delegate void WarehouseAdded(object sender, WarehouseEventArgs e);
+        public delegate void incorrectProduct(Goods g);
+
+        public event WarehouseAdded onAdded;
+        public event incorrectProduct incorrectAdded; 
+
         private float area;
         private Address address;
         private Employee employee;
@@ -35,12 +42,18 @@ namespace kl5
             
         }
 
-        public void addGoods(Goods g, int t, int amount)
+        public void addGoods(Goods g, int amount)
         {
+            onAdded?.Invoke(this, new WarehouseEventArgs("Добавление товара", g));
             typesGoods goodsType = typesGoods.bulk;
             int s = (int)goodsType;
-            if (g.Type == s) throw new MyException();          
-            goodsDict.Add(t, amount);
+            if (g.Type == s)
+            {
+                incorrectAdded?.Invoke(g);
+                throw new MyException();
+
+            }         
+            goodsDict.Add(g.SKU, amount);
            
         }
 

@@ -8,6 +8,13 @@ namespace kl5
 {
     class CoveredWarehouse : IWarehouse
     {
+
+
+        //public delegate void WarehouseAdded(string message, Goods g);
+        public delegate void WarehouseAdded(object sender, WarehouseEventArgs e);
+        public event WarehouseAdded onAdded;
+
+
         private float area;
         private Address address;
         private Employee employee;
@@ -20,7 +27,7 @@ namespace kl5
         public Dictionary<int, Goods> goodsList;
 
 
-        public CoveredWarehouse(/*Goods g, int t*/) 
+        public CoveredWarehouse() 
         {
             this.goodsDict = new Dictionary<int, int>();
             this.priceDict = new Dictionary<int, double>();
@@ -29,9 +36,11 @@ namespace kl5
 
         
 
-        public void addGoods(int t, int amount)
+        public void addGoods(int amount, Goods goods)
         {
-            goodsDict.Add(t, amount);
+            onAdded?.Invoke(this, new WarehouseEventArgs("Добавление товара", goods));
+            //onAdded?.Invoke("Добавление товара", goods);
+            goodsDict.Add(goods.SKU, amount);
             
         }
 

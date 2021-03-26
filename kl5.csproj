@@ -45,11 +45,13 @@
   <ItemGroup>
     <Compile Include="CoveredWarehouse.cs" />
     <Compile Include="Goods.cs" />
-    <Compile Include="IGoods.cs" />
+    <Compile Include="interfaces\IGoods.cs" />
+    <Compile Include="MyException.cs" />
     <Compile Include="OpenWarehouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Warehouse.cs" />
+    <Compile Include="interfaces\Warehouse.cs" />
+    <Compile Include="WarehouseEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
