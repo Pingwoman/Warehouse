@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace kl5
 {
-    class Goods : IGoods
+    public class Goods : IGoods
     {
         private string name;
         private int sku;

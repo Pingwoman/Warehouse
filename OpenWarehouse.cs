@@ -6,52 +6,64 @@ using System.Threading.Tasks;
 
 namespace kl5
 {
-    class OpenWarehouse : IWarehouse
+    public class OpenWarehouse : WH, IWarehouse
     {
+        //public delegate void WarehouseAdded(string message, Goods g); 
+        public delegate void WarehouseAdded(object sender, WarehouseEventArgs e);
+        public delegate void incorrectProduct(Goods g);
+
+        public event WarehouseAdded onAdded;
+        public event incorrectProduct incorrectAdded; 
+
         private float area;
         private Address address;
         private Employee employee;
 
-        public float Area { get { return area; } set { area = value; } }
+        /*public float Area { get { return area; } set { area = value; } }
         public Address Address { get { return address; } set { address = value; } }
         public Employee Emp { get { return employee; } set { employee = value; } }
 
         public Dictionary<int, int> goodsDict;
         public Dictionary<int, double> priceDict;
+        public Dictionary<int, Goods> goodsList; //sku good_name
+        */
 
         public OpenWarehouse()
         {
             this.goodsDict = new Dictionary<int, int>();
             this.priceDict = new Dictionary<int, double>();
+            this.goodsList = new Dictionary<int, Goods>();
         }
 
         public void addPrice(Goods g, int t, double price)
         {
-            //priceDict.Add(t, price);
+            
             typesGoods tg = typesGoods.bulk;
             int s = (int)tg;
-            if (g.Type == s)
-            {
-                s=0;
-            }
-            else
-            {
-                priceDict.Add(t, price);
-            }
+            if (g.Type == s) throw new MyException();
+            priceDict.Add(t, price);
+            
         }
 
-        public void addGoods(Goods g, int t, int amount)
+        public void addToList(int sku, Goods g)
         {
+            goodsList.Add(sku, g);
+        }
+
+
+        public void addGoods(Goods g, int amount)
+        {
+            onAdded?.Invoke(this, new WarehouseEventArgs("Добавление товара", g));
             typesGoods goodsType = typesGoods.bulk;
             int s = (int)goodsType;
             if (g.Type == s)
             {
-                s = 0; 
-            }
-            else
-            {
-                goodsDict.Add(t, amount);
-            }
+                incorrectAdded?.Invoke(g);
+                throw new MyException();
+
+            }         
+            goodsDict.Add(g.SKU, amount);
+            goodsList.Add(g.SKU, g);
         }
 
         public double calculationGoods(Dictionary<int, double> dict)
@@ -64,24 +76,27 @@ namespace kl5
             return c;
         } 
 
-        /**public void searchGoods(string g, int sk)
+        public string searchGoods( int sk)
         {
             string n;
-            if (g.Type == sk)
+
+            if (goodsList.ContainsKey(sk))
             {
-                return g.Name;
+                n = goodsList[sk].Name;
+                return n;
             }
-            else {
-                return n = "Not found";
+            else
+            {
+                return "Error";
             }
-        }**/
+        }
 
         public void setEmployee(Employee emp)
         {
             employee = emp;
         }
 
-        public void transfetGoods()
+        public void transferGoods()
         {
             ;
         }
