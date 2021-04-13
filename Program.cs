@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace kl5
 {
+    
+
     class Program
     {
+
+
         public static void onAddedGoods(object sender, WarehouseEventArgs e)
         {
             Console.WriteLine($"Операция {e.Message} товара {e.G.Name} с кодом {e.G.SKU}");
@@ -74,23 +79,20 @@ namespace kl5
            
             try
             {   
-                covered.addGoods(18, goods1);
-                covered.addGoods(30, goods2);
+                covered.addGoods(18, goods);
+                covered.addGoods(30, goods1);
+                openWarehouse.addGoods(goods2, 18);
+                openWarehouse.addGoods(goods3,  15);
 
-                //openWarehouse.addGoods(goods3, 18);
-                //openWarehouse.addGoods(goods,  15);
-                
+                covered.saveCSV(@"E:\Niyazawa\fiction\1.csv");
+                openWarehouse.saveCSV(@"E:\Niyazawa\fiction\1.csv");
             }
             catch(MyException mex)
             {
                 Console.WriteLine(mex.Message);
             }
             
-            Console.WriteLine(covered.searchGoods(2));
-
-
             
-           
             Console.ReadKey();
         }
 

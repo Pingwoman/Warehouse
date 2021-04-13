@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+
 
 namespace kl5
 {
     public class CoveredWarehouse : WH, IWarehouse
     {
-
-
-        //public delegate void WarehouseAdded(string message, Goods g);
         public delegate void WarehouseAdded(object sender, WarehouseEventArgs e);
         public event WarehouseAdded onAdded;
 
@@ -18,14 +17,7 @@ namespace kl5
         private float area;
         private Address address;
         private Employee employee;
-        /**
-        public float Area { get { return area; } set { area = value; } }
-        public Address Address { get { return address; } set { address = value; } }
-        public Employee Emp { get { return employee; } set { employee = value; } }
-        public Dictionary<int, int> goodsDict; //sku amount
-        public Dictionary<int, double> priceDict; // sku price
-        public Dictionary<int, Goods> goodsList; //sku good_name
-        */
+        
 
         public CoveredWarehouse() 
         {
@@ -38,7 +30,7 @@ namespace kl5
 
         public void addGoods(int amount, Goods goods)
         {
-            onAdded?.Invoke(this, new WarehouseEventArgs("Добавление товара", goods));
+            onAdded?.Invoke(this, new WarehouseEventArgs("Добавление", goods));
             //onAdded?.Invoke("Добавление товара", goods);
             goodsDict.Add(goods.SKU, amount);
             goodsList.Add(goods.SKU, goods);
@@ -105,5 +97,59 @@ namespace kl5
             }
             
         }
+
+        public void saveCSV(string filepath)
+        {
+            try
+            {
+                if (!File.Exists(filepath))
+                {
+
+                    using (StreamWriter writer = new StreamWriter(filepath, false))
+                    {
+                        //string data;
+
+                        foreach (int s in goodsList.Keys)
+                        {
+                            if (goodsList.ContainsKey(s))
+                            {
+                                
+                                writer.WriteLine($"{goodsList[s].SKU.ToString()},{goodsList[s].Name}, {goodsList[s].Price.ToString()}");
+                            }
+                        }
+
+
+
+                    }
+                }
+                else
+                {
+                    using (StreamWriter writer = new StreamWriter(filepath, true))
+                    {
+
+
+                        foreach (int s in goodsList.Keys)
+                        {
+                            if (goodsList.ContainsKey(s))
+                            {
+
+                                writer.WriteLine($"{goodsList[s].SKU.ToString()},{goodsList[s].Name}, {goodsList[s].Price.ToString()}");
+                                
+                            }
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
+            
+        }
+
     }
 }

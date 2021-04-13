@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace kl5
 {
@@ -99,6 +100,57 @@ namespace kl5
         public void transferGoods()
         {
             ;
+        }
+
+
+        public void saveCSV(string filepath)
+        {
+            try
+            {
+                if (!File.Exists(filepath))
+                {
+
+                    using (var writer = new StreamWriter(filepath, false))
+                    {
+
+
+                        foreach (int s in goodsList.Keys)
+                        {
+                            if (goodsList.ContainsKey(s))
+                            {
+                                writer.WriteLine($"{goodsList[s].SKU.ToString()},{goodsList[s].Name}, {goodsList[s].Price.ToString()}");
+                            }
+                        }
+
+
+
+                    }
+                }
+                else
+                {
+                    using (var writer = new StreamWriter(filepath, true))
+                    {
+
+
+                        foreach (int s in goodsList.Keys)
+                        {
+                            if (goodsList.ContainsKey(s))
+                            {
+                                writer.WriteLine($"{goodsList[s].SKU.ToString()},{goodsList[s].Name}, {goodsList[s].Price.ToString()}");
+                            }
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+
         }
     }
 }
